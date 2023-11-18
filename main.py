@@ -1,6 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Depends
+from .models import Base
+from .database import engine, SessionLocal
+from sqlalchemy.orm import Session
 
 app = FastAPI()
+
+Base.metadata.create_all(bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @app.get("/")
 def index():
@@ -15,7 +27,7 @@ def get_shelters(shelter_name, lat, lng):
 
 
 @app.post("/flags")
-def create_flag(flag_name, lat, lng):
+def create_flag(flag_id):
     return {"flag_name": flag_name,
             "lat": lat,
             "lng": lng}
