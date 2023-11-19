@@ -22,7 +22,7 @@ def index():
     return {"message":"Hello World"}
 
 #shelter.pyをつかって、shelter.dbの情報を返す
-@app.get("/shelters")
+@app.get("/shelters/{left_down_latitude}/{left_down_longitude}/{right_up_latitude}/{right_up_longitude}}")
 def get_shelters(left_down_latitude, left_down_longitude, right_up_latitude, right_up_longitude):
     return {"shelters":shelter.getShelterList(left_down_latitude, left_down_longitude, right_up_latitude, right_up_longitude)}
 
