@@ -10,6 +10,13 @@
 また、ユーザは任意の位置情報に対してコメントを追加できます。
 災害時にどこの場所がどのような状況かをテキストデータで記録できます。
 
+## API
+
+https://track-heroku-app-0025927817d9.herokuapp.com/docs
+
+herokuにデプロイしました。
+上記URLにアクセスすると、FastAPIが自動で作成するSwaggerUIが表示されます。
+
 ## フロントとの連携
 
 https://github.com/Takuho3650/MinSai
