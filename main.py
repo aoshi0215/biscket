@@ -3,6 +3,7 @@ from database import Base, engine, sessionLocal
 from sqlalchemy.orm import Session
 from schemas import Flag, Comment, AddComment
 import models
+import shelter
 
 
 app = FastAPI()
@@ -20,12 +21,10 @@ def get_db():
 def index():
     return {"message":"Hello World"}
 
+#shelter.pyをつかって、shelter.dbの情報を返す
 @app.get("/shelters")
-def get_shelters(shelter_name, lat, lng):
-    return {"message": "Shelters",
-            "shelter_name": shelter_name,
-            "lat": lat,
-            "lng": lng}
+def get_shelters(left_down_latitude, left_down_longitude, right_up_latitude, right_up_longitude):
+    return {"shelters":shelter.getShelterList(left_down_latitude, left_down_longitude, right_up_latitude, right_up_longitude)}
 
 
 @app.post("/flag")
