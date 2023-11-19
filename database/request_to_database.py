@@ -9,8 +9,12 @@ def getShelterList(left_down_latitude, left_down_longitude, right_up_latitude, r
     cur = con.cursor()
     req = f"SELECT 緯度, 経度, 施設・場所名 FROM shelters WHERE 緯度 >= {left_down_latitude} AND 緯度 <= {right_up_latitude} AND 経度 >= {left_down_longitude} AND 経度 <= {right_up_longitude};"
     cur.execute(req)
-    return cur.fetchall()
+    lists = cur.fetchall()
+    con.close()
+    return lists
 
+# 確認用
+'''
 left_down_latitude = 35.6
 left_down_longitude = 139.7
 right_up_latitude = 35.65
@@ -20,3 +24,4 @@ print((right_up_latitude, right_up_longitude))
 lists = getShelterList(left_down_latitude, left_down_longitude, right_up_latitude, right_up_longitude)
 for row in lists:
     print(row)
+'''
