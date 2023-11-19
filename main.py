@@ -38,12 +38,14 @@ def create_flag(flag: FlagCreate, db: Session = Depends(get_db)):
     db.refresh(new_flag)
     return {"flag": new_flag}
 
+'''
 #特定のflagがクリックされたとき、そのflag_idがリクエストで送られてくる
 #そのflag_idを使って、そのflagに紐づいたコメントを取得する
 @app.get("flags/{flag_lat}/{flag_lng}")
 def get_flag(flag: Flag, db: Session = Depends(get_db)):
     comments = db.query(models.Comment).filter(models.Flag.lat == flag.lat, models.Flag.lng == flag.lng).all()
     return {"comments": comments}
+'''
 
 #flagすべて取ってくる
 @app.get("/flags")
