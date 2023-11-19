@@ -1,8 +1,9 @@
-from fastapi import FastAPI,Depends
-from .models import Base
-from .database import engine, SessionLocal
+from fastapi import FastAPI,Depends, HTTPException, status
+from database import Base, engine, sessionLocal
 from sqlalchemy.orm import Session
-from .schemas import Flag, Comment
+from schemas import Flag, Comment, AddComment
+import models
+
 
 app = FastAPI()
 
@@ -33,8 +34,7 @@ def create_flag(flag: Flag, db: Session = Depends(get_db)):
     db.add(new_flag)
     db.commit()
     db.refresh(new_flag)
-    return {"message":"flag created",
-            "flag": new_flag}
+    return {"flag": new_flag}
 
 #特定のflagがクリックされたとき、そのflag_idがリクエストで送られてくる
 #そのflag_idを使って、そのflagに紐づいたコメントを取得する
@@ -45,13 +45,17 @@ def get_flag(flag: Flag, db: Session = Depends(get_db)):
 
 
 @app.post("/flags/{flag_lat}/{flag_lng}")
-def add_comment(flag: Flag, comment: Comment, db: Session = Depends(get_db)):
-    new_comment = models.Comment(comment=comment.comment, flag_lat=flag.lat, flag_lng=flag.lng)
+def add_comment(comment: Comment, db: Session = Depends(get_db)):
+    #latとlngが一致するflagを取得する
+    flag = db.query(models.Flag).filter(models.Flag.lat == flag_lat, models.Flag.lng == flag_lng).first()
+    #flagに紐づいたコメントを作成する
+    new_comment = models.Comment(comment=comment.comment, flag_id=flag.id) 
     db.add(new_comment)
     db.commit()
     db.refresh(new_comment)
-    return {"message" :"comment created",
-            "comment": comment}
+    return {"message":"comment created",
+            "comment": new_comment}
+
 
 
 

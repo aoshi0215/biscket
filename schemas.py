@@ -13,6 +13,9 @@ class Flag(BaseModel):
 class Comment(BaseModel):
     comment: str
 
-
+class AddComment(BaseModel):
+    comment: str
+    lat: float
+    lng: float
 
     
