@@ -6,7 +6,6 @@ import models
 import shelter
 from fastapi.middleware.cors import CORSMiddleware
 
-
 app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
@@ -18,6 +17,15 @@ def get_db():
     finally:
         db.close()
 
+#CORSを許可する
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+    )
 
 #ルートディレクトリにアクセスしたときの処理
 @app.get("/")
