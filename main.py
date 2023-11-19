@@ -43,6 +43,11 @@ def get_flag(flag: Flag, db: Session = Depends(get_db)):
     comments = db.query(models.Comment).filter(models.Flag.lat == flag.lat, models.Flag.lng == flag.lng).all()
     return {"comments": comments}
 
+#flagすべて取ってくる
+@app.get("/flags")
+def get_flags(db: Session = Depends(get_db)):
+    flags = db.query(models.Flag).all()
+    return {"flags": flags}
 
 @app.post("/flags/{flag_lat}/{flag_lng}")
 def add_comment(comment: Comment, db: Session = Depends(get_db)):
