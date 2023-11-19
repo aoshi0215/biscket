@@ -9,8 +9,10 @@ class Flag(Base):
     id = Column(Integer, primary_key=True, index=True)
     lat = Column(Float)
     lng = Column(Float)
-    comments = relationship("Comment", back_populates="flag")
+    comments = Column(String)
 
+
+'''
 class Comment(Base):
     __tablename__ = "comments"
 
@@ -19,3 +21,4 @@ class Comment(Base):
     flag_id = Column(Integer, ForeignKey("flags.id"))
 
     flag = relationship("Flag", back_populates="comments")
+'''

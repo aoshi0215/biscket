@@ -18,21 +18,6 @@ def get_db():
     finally:
         db.close()
 
-#CORSを許可する
-origins = [
-    "http://localhost:3000",
-    "localhost:3000",
-    "http://localhost:8000",
-    "localhost:8000",
-    "http://localhost:5000",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],)
 
 #ルートディレクトリにアクセスしたときの処理
 @app.get("/")
@@ -47,7 +32,7 @@ def get_shelters(left_down_latitude, left_down_longitude, right_up_latitude, rig
 
 @app.post("/flag")
 def create_flag(flag: FlagCreate, db: Session = Depends(get_db)):
-    new_flag = models.Flag(lat=flag.lat, lng=flag.lng, comment=flag.comment)
+    new_flag = models.Flag(lat=flag.lat, lng=flag.lng, comments=flag.comment)
     db.add(new_flag)
     db.commit()
     db.refresh(new_flag)
@@ -61,15 +46,11 @@ def get_flag(flag: Flag, db: Session = Depends(get_db)):
     return {"comments": comments}
 
 #flagすべて取ってくる
-#flagに紐づいたコメントも取ってくる
 @app.get("/flags")
 def get_flags(db: Session = Depends(get_db)):
     flags = db.query(models.Flag).all()
-    flags_with_comments = []
-    for flag in flags:
-        comments = db.query(models.Comment).filter(models.Flag.lat == flag.lat, models.Flag.lng == flag.lng).all()
-        flags_with_comments.append({"lat": flag.lat, "lng": flag.lng, "comments": comments})
-    return {"flags": flags_with_comments}
+    return {"flags": flags}
+
 
 @app.post("/flags/{flag_lat}/{flag_lng}")
 def add_comment(comment: Comment, db: Session = Depends(get_db)):
