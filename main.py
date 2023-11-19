@@ -1,7 +1,7 @@
 from fastapi import FastAPI,Depends, HTTPException, status
 from database import Base, engine, sessionLocal
 from sqlalchemy.orm import Session
-from schemas import Flag, Comment, AddComment
+from schemas import Flag, Comment, AddComment, FlagCreate
 import models
 import shelter
 
@@ -11,7 +11,7 @@ app = FastAPI()
 Base.metadata.create_all(bind=engine)
 
 def get_db():
-    db = SessionLocal()
+    db = sessionLocal()
     try:
         yield db
     finally:
@@ -28,7 +28,7 @@ def get_shelters(left_down_latitude, left_down_longitude, right_up_latitude, rig
 
 
 @app.post("/flag")
-def create_flag(flag: Flag, db: Session = Depends(get_db)):
+def create_flag(flag: FlagCreate, db: Session = Depends(get_db)):
     new_flag = models.Flag(lat=flag.lat, lng=flag.lng)
     db.add(new_flag)
     db.commit()

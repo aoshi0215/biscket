@@ -10,6 +10,11 @@ class Flag(BaseModel):
     lat: float
     lng: float
 
+class FlagCreate(BaseModel):
+    lat: float
+    lng: float
+    comment: str
+
 class Comment(BaseModel):
     comment: str
 
