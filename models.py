@@ -1,6 +1,8 @@
-from sqlalchemy import Column, Integer, String, ForeignKey,Date,Float
+from sqlalchemy import Column, Integer, String, ForeignKey,Date,Float,DateTime
 from database import Base
 from sqlalchemy.orm import relationship
+from datetime import datetime, timedelta, timezone, tzinfo, date, time
+
 
 
 class Flag(Base):
@@ -10,6 +12,16 @@ class Flag(Base):
     lat = Column(Float)
     lng = Column(Float)
     comments = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    @staticmethod
+    def current_time():
+        return datetime.utcnow()
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.created_at = self.current_time()
+
 
 
 '''

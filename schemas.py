@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from sqlalchemy import DateTime
 
 #Flagにはflag_name, lat, lngと、それに紐づいたコメントがある
 # 例えば、flag_nameが「コンビニ」で、latが35.123456, lngが135.123456のとき、
