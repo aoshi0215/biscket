@@ -15,6 +15,12 @@ class FlagCreate(BaseModel):
     lng: float
     comment: str
 
+class FlagResponse(BaseModel):
+    lat: float
+    lng: float
+    #commentをリスト形式で返す
+    comments: list
+
 class Comment(BaseModel):
     comment: str
 
