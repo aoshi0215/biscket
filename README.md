@@ -12,10 +12,11 @@
 
 ## API
 
-https://track-heroku-app-0025927817d9.herokuapp.com/docs
+https://biscket-v5.onrender.com/
 
-herokuにデプロイしました。
+renderにデプロイしました。
 上記URLにアクセスすると、FastAPIが自動で作成するSwaggerUIが表示されます。
+※起動するのに時間がかかる場合があります
 
 ## フロントとの連携
 
