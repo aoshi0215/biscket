@@ -12,7 +12,7 @@
 
 ## API
 
-https://biscket-v5.onrender.com/
+https://biscket-v5.onrender.com/docs
 
 renderにデプロイしました。
 上記URLにアクセスすると、FastAPIが自動で作成するSwaggerUIが表示されます。
